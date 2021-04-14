@@ -1,7 +1,8 @@
 package ttl.larku.service;
 
-import ttl.larku.dao.BaseDAO;
-import ttl.larku.dao.inmemory.InMemoryStudentDAO;
+import ttl.larku.dao.DAOFactory;
+import ttl.larku.dao.StudentDAO;
+import ttl.larku.dao.jpa.JpaStudentDAO;
 import ttl.larku.domain.Student;
 import ttl.larku.domain.Student.Status;
 
@@ -13,10 +14,20 @@ public class StudentService {
     List<String> stuff = new ArrayList<>();
 
     //private InMemoryStudentDAO studentDAO;
-    private BaseDAO<Student> studentDAO;
+//    private BaseDAO<Student> studentDAO;
+    private StudentDAO studentDAO;
 
-    public StudentService() {
-        studentDAO = new InMemoryStudentDAO();
+    public StudentService(StudentDAO studentDAO) {
+    	// reference to DAO
+    	// how arrows between components are setup
+    	// dependency satsifes by class itself
+    	
+//        studentDAO = new JpaStudentDAO();
+    	// depeendency injection form, needs a DAO, telling something else to set it up for me 
+    	
+//    	studentDAO = DAOFactory.getStudentDAO();
+    	
+    	this.studentDAO = studentDAO;
     }
 
     public Student createStudent(String name, String phoneNumber, Status status) {
@@ -51,11 +62,11 @@ public class StudentService {
         return studentDAO.getAll();
     }
 
-    public BaseDAO<Student> getStudentDAO() {
-        return studentDAO;
-    }
-
-    public void setStudentDAO(BaseDAO<Student> studentDAO) {
-        this.studentDAO = studentDAO;
-    }
+//    public BaseDAO<Student> getStudentDAO() {
+//        return studentDAO;
+//    }
+//
+//    public void setStudentDAO(BaseDAO<Student> studentDAO) {
+//        this.studentDAO = studentDAO;
+//    }
 }

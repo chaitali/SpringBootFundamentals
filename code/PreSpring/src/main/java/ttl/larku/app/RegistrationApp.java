@@ -1,7 +1,9 @@
 package ttl.larku.app;
 
-import org.slf4j.Logger;
+//import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import ttl.larku.dao.DAOFactory;
 import ttl.larku.dao.MyFactory;
 import ttl.larku.domain.Course;
 import ttl.larku.domain.Student;
@@ -13,29 +15,38 @@ import java.util.List;
 public class RegistrationApp {
 
     int value;
-
-    static Logger logger = LoggerFactory.getLogger(RegistrationApp.class);
+    
+    // only create one instance
+//    private StudentService ss = new StudentService();
+    
+    
+    
+    private StudentService ss = DAOFactory.getaStudentService();
+    
+    
+//    static Logger logger = LoggerFactory.getLogger(RegistrationApp.class);
 
     public static void main(String[] args) {
         //primeAndPrintBoth();
-        postRequestToAddAStudent();
-        getRequestForAllStudents();
+    	RegistrationApp ra = new RegistrationApp();
+        ra.postRequestToAddAStudent();
+        ra.getRequestForAllStudents();
     }
 
 
-    public static void postRequestToAddAStudent() {
-        logger.info("Boo");
-        //StudentService ss = new StudentService();
-        StudentService ss = MyFactory.studentService();
+    public void postRequestToAddAStudent() {
+//        logger.info("Boo");
+//        StudentService ss = new StudentService();
+//        StudentService ss = MyFactory.studentService();
         ss.createStudent("New One", "282 484 9944", Student.Status.FULL_TIME);
 
         List<Student> students = ss.getAllStudents();
         students.forEach(System.out::println);
     }
 
-    public static void getRequestForAllStudents() {
-        //StudentService ss = new StudentService();
-        StudentService ss = MyFactory.studentService();
+    public void getRequestForAllStudents() {
+//        StudentService ss = new StudentService();
+//        StudentService ss = MyFactory.studentService();
         List<Student> students = ss.getAllStudents();
         System.out.println("All Students: " + students.size());
         students.forEach(System.out::println);

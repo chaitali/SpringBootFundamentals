@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import ttl.larku.dao.BaseDAO;
+import ttl.larku.dao.inmemory.StudentDAO;
 import ttl.larku.domain.Student;
 
-public class JpaStudentDAO implements BaseDAO<Student> {
+public class JpaStudentDAO implements ttl.larku.dao.StudentDAO {
 
     private Map<Integer, Student> students = new HashMap<Integer, Student>();
     private static int nextId = 0;

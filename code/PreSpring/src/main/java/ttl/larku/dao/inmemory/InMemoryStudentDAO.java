@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import ttl.larku.dao.BaseDAO;
+import ttl.larku.dao.StudentDAO;
 import ttl.larku.domain.Student;
 
-public class InMemoryStudentDAO implements BaseDAO<Student> {
-
+public class InMemoryStudentDAO implements StudentDAO {
+	// static so it isn't constantly initialized - solves the reinit problem
     private Map<Integer, Student> students = new HashMap<Integer, Student>();
     private static int nextId = 0;
 
-    public void update(Student updateObject) {
+    @Override
+	public void update(Student updateObject) {
         if (students.containsKey(updateObject.getId())) {
             students.put(updateObject.getId(), updateObject);
         }
@@ -23,7 +25,8 @@ public class InMemoryStudentDAO implements BaseDAO<Student> {
         students.remove(student.getId());
     }
 
-    public Student create(Student newObject) {
+    @Override
+	public Student create(Student newObject) {
         //Create a new Id
         int newId = nextId++;
         newObject.setId(newId);
@@ -32,11 +35,13 @@ public class InMemoryStudentDAO implements BaseDAO<Student> {
         return newObject;
     }
 
-    public Student get(int id) {
+    @Override
+	public Student get(int id) {
         return students.get(id);
     }
 
-    public List<Student> getAll() {
+    @Override
+	public List<Student> getAll() {
         return new ArrayList<Student>(students.values());
     }
 
